@@ -33,4 +33,5 @@ binarySearchTree.Insert(person5);
 
 //todo: how to iterate a binary search tree??
 //todo: how to delete items from the tree?
+//binarySearchTree.Traverse(TreeTraversalMode.PreOrderTraversal);
 Console.ReadLine();

@@ -7,5 +7,7 @@
         bool Delete(T item);
 
         T Find(T item);
+
+        void Traverse(TreeTraversalMode traversalMode);
     }
 }

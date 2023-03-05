@@ -45,11 +45,11 @@ public sealed class Person : IComparable<Person>
         if (other is null)
             throw new NullReferenceException($"{nameof(other)} is null");
 
-        if (other!.Age > Age)
+        if (Age > other!.Age)
         {
             return 1;
         }
-        else if (other!.Age < Age)
+        else if (Age < other!.Age)
         {
             return -1;
         }
