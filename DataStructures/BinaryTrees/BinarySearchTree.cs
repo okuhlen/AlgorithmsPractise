@@ -1,6 +1,6 @@
 ﻿namespace PractiseAlgorithms.DataStructures.BinaryTrees
 {
-    public class BinarySearchTree<T> : ITree<T>
+    public class BinarySearchTree<T> : ITree<T> where T : IComparable<T>
     {
         private Node<T> Root;
 
@@ -25,15 +25,25 @@
                 return;
             }
 
-            Node<T> currentNode = null;
-            if (item > Root.Value)
-            {
+            T currentItem = Root.Value;
 
+            if (item.CompareTo(currentItem) > 0 && Root.Left is null)
+            {
+                Root.Left = new Node<T> { Value = item };
+                return;
             }
+
+            if (item.CompareTo(currentItem) < 0 && Root.Right is null)
+            {
+                Root.Right = new Node<T> { Value = item };
+                return;
+            }
+
             do
             {
+                //recursively go through the tree somehow
 
-            } while ()
+            } while (currentItem is null);
         }
     }
 }
