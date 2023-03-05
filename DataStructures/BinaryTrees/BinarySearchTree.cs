@@ -14,6 +14,7 @@
             throw new NotImplementedException();
         }
 
+        //the key to this is recursion??
         public void Insert(T item)
         {
             if (Root == null)
@@ -25,25 +26,45 @@
                 return;
             }
 
-            T currentItem = Root.Value;
-
-            if (item.CompareTo(currentItem) > 0 && Root.Left is null)
-            {
-                Root.Left = new Node<T> { Value = item };
-                return;
-            }
-
-            if (item.CompareTo(currentItem) < 0 && Root.Right is null)
-            {
-                Root.Right = new Node<T> { Value = item };
-                return;
-            }
-
+            var currentItem = Root;
             do
             {
-                //recursively go through the tree somehow
+                if (item.CompareTo(currentItem.Value) > 0)
+                {
+                    if (currentItem.Right is null)
+                    {
+                        currentItem.Right = new Node<T>
+                        {
+                            Value = item
+                        };
 
-            } while (currentItem is null);
+                        return;
+                    }
+
+                    currentItem = currentItem.Right;
+                }
+
+                else if (item.CompareTo(currentItem.Value) < 0)
+                {
+                    if (currentItem.Left is null)
+                    {
+                        currentItem.Left = new Node<T>
+                        {
+                            Value = item
+                        };
+
+                        return;
+                    }
+
+                    currentItem = currentItem.Left;
+                }
+
+                else
+                {
+                    throw new Exception("No duplicate items are allowed to be inserted");
+                }
+
+            } while (currentItem is not null);
         }
     }
 }
