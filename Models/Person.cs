@@ -1,5 +1,5 @@
 ﻿namespace PractiseAlgorithms.Models;
-public sealed class Person
+public sealed class Person : IComparable<Person>
 {
     public string Name { get; set; }
     public string Surname { get; set; }
@@ -38,5 +38,10 @@ public sealed class Person
     public override string ToString()
     {
         return $"{Name} {Surname} {Age}";
+    }
+
+    public int CompareTo(Person? other)
+    {
+        throw new NotImplementedException();
     }
 }
