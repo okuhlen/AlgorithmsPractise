@@ -5,7 +5,7 @@ public sealed class Person : IComparable<Person>
     public string Surname { get; set; }
     public int Age { get; set; }
 
-    public static bool operator == (Person first, Person next)
+    public static bool operator ==(Person first, Person next)
     {
         if (first.Name == next.Name && first.Surname == next.Surname)
         {
@@ -15,9 +15,9 @@ public sealed class Person : IComparable<Person>
         return false;
     }
 
-    public static bool operator != (Person first, Person next)
+    public static bool operator !=(Person first, Person next)
     {
-        if ((first.Name != next.Name ) || (first.Surname != next.Surname))
+        if ((first.Name != next.Name) || (first.Surname != next.Surname))
         {
             return true;
         }
@@ -25,7 +25,7 @@ public sealed class Person : IComparable<Person>
         return false;
     }
 
-    public static Person operator + (Person first, Person second)
+    public static Person operator +(Person first, Person second)
     {
         return new()
         {
@@ -42,6 +42,36 @@ public sealed class Person : IComparable<Person>
 
     public int CompareTo(Person? other)
     {
-        throw new NotImplementedException();
+        if (other is null)
+            throw new NullReferenceException($"{nameof(other)} is null");
+
+        if (other!.Age > Age)
+        {
+            return 1;
+        }
+        else if (other!.Age < Age)
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is null)
+            return false;
+
+        if (obj is Person)
+        {
+            var other = obj as Person;
+
+            if (other!.Age == Age)
+                return true;
+        }
+
+        return false;
     }
 }

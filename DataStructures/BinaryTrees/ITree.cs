@@ -6,6 +6,6 @@
 
         bool Delete(T item);
 
-        bool Find(T item);
+        T Find(T item);
     }
 }

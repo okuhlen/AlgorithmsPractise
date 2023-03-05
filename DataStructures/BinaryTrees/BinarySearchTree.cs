@@ -9,9 +9,30 @@
             throw new NotImplementedException();
         }
 
-        public bool Find(T item)
+        //is the key recursion?
+        public T Find(T item)
         {
-            throw new NotImplementedException();
+            if (Root is null)
+                throw new NullReferenceException("No items present in the Binary Search Tree");
+
+            var currentNode = Root;
+            do
+            {
+                if (currentNode.Value.Equals(item))
+                {
+                    return currentNode.Value;
+                }
+                else if (item.CompareTo(currentNode.Value) > 0)
+                {
+                    currentNode = currentNode.Right;
+                } 
+                else if (item.CompareTo(currentNode.Value) < 0)
+                {
+                    currentNode = currentNode.Left;
+                }
+            } while (currentNode != null);
+
+            throw new Exception("Could not find the item in the collection");
         }
 
         //the key to this is recursion??
