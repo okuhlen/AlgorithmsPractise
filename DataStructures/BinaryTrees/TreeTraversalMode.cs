@@ -3,5 +3,6 @@
 public enum TreeTraversalMode
 {
     PreOrderTraversal,
-    PostOrderTraversal
+    PostOrderTraversal,
+    InOrderTraversal
 }

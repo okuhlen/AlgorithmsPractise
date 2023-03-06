@@ -56,7 +56,22 @@ public class BinarySearchTree<T> : ITree<T> where T : IComparable<T>
     }
     public bool Delete(T item)
     {
-        throw new NotImplementedException();
+        ArgumentNullException.ThrowIfNull(item);
+        if (Root is null)
+            throw new NullReferenceException("No items in the BST!");
+
+        if (Root.Value.Equals(item))
+        {
+
+        }
+
+        var currentNode = Root;
+        do
+        {
+
+        } while (currentNode is not null);
+
+        throw new NotImplementedException("Still thinking...");
     }
 
     //is the key recursion?
@@ -102,16 +117,17 @@ public class BinarySearchTree<T> : ITree<T> where T : IComparable<T>
 
     private void TraverseForPreOrderTraversal()
     {
-        if (Root is null)
-            throw new NullReferenceException("No root node has been defined");
-
-        var currentNode = Root;
-        do
+        var node = Root;
+        if (node is not null)
         {
-            if (currentNode.Left is not null)
-            {
-                
-            }
-        } while (currentNode is not null);
+            PreOrderTraversal(node.Left);
+            Console.WriteLine(node.ToString());
+            PreOrderTraversal(node.Right);
+        }
+    }
+
+    private void PreOrderTraversal(Node<T> node)
+    {
+        Console.WriteLine(node.ToString());
     }
 }
