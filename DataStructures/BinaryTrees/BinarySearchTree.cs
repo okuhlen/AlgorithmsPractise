@@ -90,7 +90,7 @@ public class BinarySearchTree<T> : ITree<T> where T : IComparable<T>
             else if (item.CompareTo(currentNode.Value) > 0)
             {
                 currentNode = currentNode.Right;
-            } 
+            }
             else if (item.CompareTo(currentNode.Value) < 0)
             {
                 currentNode = currentNode.Left;
@@ -101,7 +101,7 @@ public class BinarySearchTree<T> : ITree<T> where T : IComparable<T>
     }
 
     //the key to this is recursion??
-    
+
 
     public void Traverse(TreeTraversalMode traversalMode)
     {
@@ -117,17 +117,15 @@ public class BinarySearchTree<T> : ITree<T> where T : IComparable<T>
 
     private void TraverseForPreOrderTraversal()
     {
-        var node = Root;
-        if (node is not null)
-        {
-            PreOrderTraversal(node.Left);
-            Console.WriteLine(node.ToString());
-            PreOrderTraversal(node.Right);
-        }
+        PreOrderTraversal(Root.Left);
+        Console.WriteLine(Root.ToString());
+        PreOrderTraversal(Root.Right);
     }
 
     private void PreOrderTraversal(Node<T> node)
     {
-        Console.WriteLine(node.ToString());
+        if (node != null)
+            Console.WriteLine(node.ToString());
+        return;
     }
 }
