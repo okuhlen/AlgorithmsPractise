@@ -10,99 +10,34 @@ If the index is on the left edge of the array, then the left sum is 0 because th
 
 Return the leftmost pivot index.If no such index exists, return -1.*/
 
-//NOTES: I am not happy with this solution, I think I can improve it somehow. Will try think of a better way. 
+//NOTES: Researched what the answer is 
 public class PivotIndexSolution
 {
     public int PivotIndex(int[] nums)
     {
-        if (nums.Length <= 2)
+        if (nums.Length == 0)
         {
-            return 0;
+            return -1;
         }
 
-        //to figure out what the pivot point is, we will calculate what the midpoint is.
-        //then, update the midpoint by going 1 up or 1 down each iteration. 
-        int midpoint = (int)(nums.Length / 2);
-        midpoint = midpoint - 1;
-        if (midpoint == 0) //if the midpoint ends up being the left edge of the array, we can only calculate whats on the right of the array
-        {
-            int sumOfLeftItems = 0;
-            int sumOfRightItems = 0;
-            for (int i = 1; i <= nums.Length - 1; i++)
-            {
-                sumOfRightItems += nums[i];
-            }
+        int left = 0;
+        int right = 0;
 
-            if (sumOfLeftItems == sumOfRightItems)
-            {
-                return midpoint;
-            }
+        foreach (var num in nums)
+        {
+            right += num;
         }
 
-        //if the midpoint is the right edge of the array, we can only calculate what is on the left of the array. 
-        if (midpoint == (nums.Length - 1))
+        for (int a = 0; a <= nums.Length - 1; a++)
         {
-            int sumOfRightItems = 0;
-            int sumOfLeftItems = 0;
-
-            for (int i = midpoint - 1; i <= 0; i--)
+            right -= nums[a];
+            if (right == left)
             {
-                sumOfLeftItems += nums[i];
+                return a;
             }
-
-            if (sumOfLeftItems == sumOfRightItems)
-            {
-                return 0;
-            }
-        }
-
-        //this loop is responsible for summing up everything from the midpoint, till the end of the array
-        //with each iteration, the midpoint is updated (1 up)
-        for (int a = midpoint; a <= nums.Length - 1; a++)
-        {
-
-            int sumOfLeft = 0;
-            for (int b = (midpoint + 1); b >= 0; b--)
-            {
-                sumOfLeft += nums[b];
-            }
-
-            int sumOfRight = 0;
-            for (int c = (midpoint + 1); c <= nums.Length - 1; c++)
-            {
-                sumOfRight += nums[c];
-            }
-
-            if (sumOfLeft == sumOfRight)
-            {
-                return a + 1;
-            }
-        }
-
-        //this loop is responsible for summing up everything from the midpoint till the start of the array. 
-        //with each iteration, the midpoint is updated (1 down)
-        for (int a = (midpoint + 1); a >= 0; a--)
-        {
-
-            int sumOfLeft = 0;
-            for (int b = (midpoint + 1); b >= 0; b--)
-            {
-                sumOfLeft += nums[b];
-            }
-
-            int sumOfRight = 0;
-            for (int c = (midpoint + 1); c <= nums.Length - 1; c++)
-            {
-                sumOfRight += nums[c];
-            }
-
-            if (sumOfLeft == sumOfRight)
-            {
-                return a + 1;
-            }
+            left += nums[a];
         }
 
         return -1;
-
     }
 }
