@@ -21,10 +21,36 @@ public sealed class Graph<TKey, TValue> where TKey: struct where TValue: class
     /// </summary>
     /// <param name="edgesList">list of connected nodes</param>
     /// <returns>A new graph instance</returns>
-    public static Graph<TKey, TValue> FromEdgesList(List<List<Node<TKey, TValue>>> edgesList)
+    public static Graph<TKey, TValue> FromEdgesListBiDirectional(List<List<Node<TKey, TValue>>> edgesList)
     {
         var graph = new Dictionary<Node<TKey, TValue>, List<Node<TKey, TValue>>>();
-        
+
+        foreach (var edge in edgesList)
+        {
+            if (!graph.TryGetValue(edge.First(), out var node))
+            {
+                graph.Add(edge.First(), new List<Node<TKey, TValue>>()
+                {
+                    edge.Last()
+                });
+            }
+            else
+            {
+                graph[edge.First()].Add(edge.Last());
+            }
+
+            if (!graph.TryGetValue(edge.Last(), out var lastNode))
+            {
+                graph.Add(edge.Last(), new List<Node<TKey, TValue>>()
+                {
+                    edge.First()
+                });
+            }
+            else
+            {
+                graph[edge.Last()].Add(edge.First());
+            }
+        }
         
         return new Graph<TKey, TValue>(graph);
     }
