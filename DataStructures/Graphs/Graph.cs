@@ -2,12 +2,23 @@
 
 public sealed class Graph<TKey, TValue> where TKey: struct where TValue: class
 {
-    //this is an adjacency list. what about the 2d array representation?
+    //this is an adjacency list (a list of nodes, and their neighbours). what about the 2d array representation?
     private readonly Dictionary<Node<TKey, TValue>, List<Node<TKey, TValue>>> Items;
 
     public Graph()
     {
         Items = new Dictionary<Node<TKey, TValue>, List<Node<TKey, TValue>>>();
+    }
+
+    /// <summary>
+    /// We can create our graph from a list of edges. An edge is defined by the connection (line) between 2 nodes.
+    /// The list here is simply a collection of nodes which are connected to each other (pairings)
+    /// </summary>
+    /// <param name="edgesList">list of connected nodes</param>
+    /// <returns>A new graph instance</returns>
+    public static Graph FromEdgesList(List<List<Node<TKey, TValue>>> edgesList)
+    {
+        
     }
     public void Add(TKey key, TValue keyValue, List<KeyValuePair<TKey, TValue>> neighbours)
     {
@@ -20,7 +31,7 @@ public sealed class Graph<TKey, TValue> where TKey: struct where TValue: class
         if (Items.ContainsKey(keyNode))
             throw new Exception("The graph already contains an item with the given key");
         
-        Items.Add(keyNode, neighbours.ConvertAll(x => new Node<TKey, TValue>() { Key = x.Key, Value = x.Value }));
+        Items.Add(keyNode, neighbours.ConvertAll(x => new Node<TKey, TValue> { Key = x.Key, Value = x.Value }));
     }
 
     /// <summary>
