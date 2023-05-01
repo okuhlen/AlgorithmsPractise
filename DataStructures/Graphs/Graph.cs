@@ -10,15 +10,23 @@ public sealed class Graph<TKey, TValue> where TKey: struct where TValue: class
         Items = new Dictionary<Node<TKey, TValue>, List<Node<TKey, TValue>>>();
     }
 
+    private Graph(Dictionary<Node<TKey, TValue>, List<Node<TKey, TValue>>> items)
+    {
+        Items = items;
+    }
+
     /// <summary>
     /// We can create our graph from a list of edges. An edge is defined by the connection (line) between 2 nodes.
     /// The list here is simply a collection of nodes which are connected to each other (pairings)
     /// </summary>
     /// <param name="edgesList">list of connected nodes</param>
     /// <returns>A new graph instance</returns>
-    public static Graph FromEdgesList(List<List<Node<TKey, TValue>>> edgesList)
+    public static Graph<TKey, TValue> FromEdgesList(List<List<Node<TKey, TValue>>> edgesList)
     {
+        var graph = new Dictionary<Node<TKey, TValue>, List<Node<TKey, TValue>>>();
         
+        
+        return new Graph<TKey, TValue>(graph);
     }
     public void Add(TKey key, TValue keyValue, List<KeyValuePair<TKey, TValue>> neighbours)
     {
