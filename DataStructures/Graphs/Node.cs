@@ -19,11 +19,16 @@ public sealed class Node<TKey, TValue> : IEquatable<Node<TKey, TValue>> where TK
     }
 
     /// <summary>
-    /// Return some string of the value
+    /// Return the string representation of the value attached to this particular node. 
     /// </summary>
     /// <returns></returns>
     public override string ToString()
     {
         return Value.ToString()!;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return Equals(obj as Node<TKey, TValue>);
     }
 }

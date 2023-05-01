@@ -2,6 +2,7 @@
 
 public sealed class Graph<TKey, TValue> where TKey: struct where TValue: class
 {
+    //this is an adjacency list. what about the 2d array representation?
     private readonly Dictionary<Node<TKey, TValue>, List<Node<TKey, TValue>>> Items;
 
     public Graph()
@@ -42,6 +43,68 @@ public sealed class Graph<TKey, TValue> where TKey: struct where TValue: class
                 traversalStack.Push(node);
             }
         }
+    }
+
+    public void TraverseBreadthFirst(TKey key, TValue keyValue)
+    {
+        var node = new Node<TKey, TValue>
+        {
+            Key = key,
+            Value = keyValue
+        };
+        var traversalQueue = new Queue<Node<TKey, TValue>>();
+        traversalQueue.Enqueue(node);
+        while (traversalQueue.Any())
+        {
+            var currentItem = traversalQueue.Dequeue();
+            Console.WriteLine($"Current Node: {currentItem}");
+            if (!Items.TryGetValue(currentItem, out var item)) continue;
+            foreach (var neighbours in item)
+            {
+                traversalQueue.Enqueue(neighbours);
+            }
+        }
+    }
+
+    public bool HasPathDepthFirst((TKey key, TValue value) source, (TKey key, TValue value) destination)
+    {
+        var sourceNode = new Node<TKey, TValue> { Key = source.key, Value = source.value };
+        var destinationNode = new Node<TKey, TValue> { Key = destination.key, Value = destination.value };
+
+        if (sourceNode.Equals(destinationNode))
+        {
+            return true;
+        }
+        
+        foreach (var node in Items[sourceNode])
+        {
+            return HasPathDepthFirst((node.Key, node.Value), (destinationNode.Key, destinationNode.Value));
+        }
+
+        return false;
+    }
+
+    public bool HasPathBreadthFirst((TKey key, TValue value) source, (TKey key, TValue value) destination)
+    {
+        var traversalQueue = new Queue<Node<TKey, TValue>>();
+        var sourceNode = new Node<TKey, TValue> { Key = source.key, Value = source.value };
+        var destinationNode = new Node<TKey, TValue> { Key = destination.key, Value = destination.value };
+        
+        traversalQueue.Enqueue(sourceNode);
+        while (traversalQueue.Any())
+        {
+            var currentItem = traversalQueue.Dequeue();
+            if (currentItem.Equals(destinationNode))
+                return true;
+            if (!Items.TryGetValue(currentItem, out var neighbours))
+                continue;
+            foreach (var neighbour in neighbours)
+            {
+                traversalQueue.Enqueue(neighbour);
+            }
+        }
+
+        return false;
     }
     
 }
