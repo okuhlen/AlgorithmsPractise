@@ -151,5 +151,52 @@ public sealed class Graph<TKey, TValue> where TKey: struct where TValue: class
 
         return false;
     }
+
+    //it is assumed that at this point, we will have an adjacency list to work from. 
+    //we know that each node is represented as a key, and the items represent the neighbours.
+    //therefore, we can use the keys to get a list of all nodes
+    //NB: VERY IMPORTANT INTERVIEW QUESTION!! PRACTISE TOMORROW MORNING!! 
+    public int GetNumberOfConnectedComponents()
+    {
+        var count = 0;
+        var visitedNodes = new List<Node<TKey, TValue>>();
+        var stack = new Stack<Node<TKey, TValue>>();
+
+        foreach (var node in Items.Keys)
+        {
+            //if the node has already been visited, move onto the next known node
+            if (visitedNodes.Contains(node))
+                continue;
+
+            //if the given node has no neighbours, we can conclude we have visited that component in its entirety
+            if (!Items[node].Any())
+            {
+                count++;
+                visitedNodes.Add(node);
+                continue;
+            }
+            
+            //add the current node to the stack, so we can look at the node's neighbours
+            stack.Push(node);
+            while (stack.Any())
+            {
+                var currentItem = stack.Pop();
+                var neighbours = Items[currentItem];
+
+                if (neighbours.Any())
+                {
+                    foreach (var neighbour in neighbours)
+                    {
+                        stack.Push(neighbour);
+                        visitedNodes.Add(neighbour);
+                    }
+                }
+            }
+            count++; //meaning that all possible neighbours for this node have been visited.
+        }
+
+        return count;
+
+    }
     
 }
